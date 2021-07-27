@@ -1,4 +1,5 @@
 import {FC,memo} from 'react';
+import {useHistory} from "react-router-dom";
 import {HiLockClosed} from 'react-icons/hi';
 import {FiLock, FiUser} from "react-icons/fi"
 import {FaSpinner} from 'react-icons/fa';
@@ -7,11 +8,16 @@ import {useFormik} from "formik";
 import * as yup from "yup";
 import InputBox from '../components/InputBox/InputBox';
 import Button from '../components/Button/Button';
+import { login } from '../api';
+
 
 interface Props {
 }
 
 const LoginPage: FC<Props> = (props) => {
+
+  const history=useHistory();
+
 
   const {handleSubmit , getFieldProps , touched , isSubmitting , errors} = useFormik({
     initialValues: {
@@ -22,12 +28,10 @@ const LoginPage: FC<Props> = (props) => {
       email: yup.string().required().email(),
       password: yup.string().required().min(8, (min)=> "Atleast" + min+ " characters" )
     }),
-    onSubmit: (data , { setSubmitting })=> {
-      console.log("form submitting",data);
-      setTimeout(()=>{
-        console.log("Form submitted successfully");
-        setSubmitting(false);
-      },5000)
+    onSubmit: (data)=> {
+      login(data).then(()=>{
+        history.push("/dashboard");
+      })
     }
   })
   
