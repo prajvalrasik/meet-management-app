@@ -1,6 +1,5 @@
 import {FC,memo} from 'react';
 import {useHistory} from "react-router-dom";
-import {HiLockClosed} from 'react-icons/hi';
 import {FiLock, FiUser} from "react-icons/fi"
 import {FaSpinner} from 'react-icons/fa';
 import { Link } from 'react-router-dom';

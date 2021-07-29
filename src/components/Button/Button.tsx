@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import {FC,memo} from 'react';
-import { HiLockClosed } from 'react-icons/hi';
+// import { HiLockClosed } from 'react-icons/hi';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     theme?: 'primary' | 'secondary' | 'success' | 'danger';
@@ -28,7 +28,7 @@ const Button: FC<Props> = ({children, className , theme , look , ...rest}) => {
           className= {"transition-shadow px-5 py-2 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " + className + " " + lookClasses }
           >
           <span className="absolute left-0 pl-1 inset-y-0 flex items-center pl-3">
-            <HiLockClosed className="h-5 w-5 " aria-hidden="true" />
+            {/* <HiLockClosed className="h-5 w-5 " aria-hidden="true" /> */}
           </span>
           {children}
     </button>

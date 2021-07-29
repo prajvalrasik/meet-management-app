@@ -1,5 +1,8 @@
 import {FC,memo} from 'react';
-import { HiOutlineBell, HiOutlineMail, HiOutlineMenu } from 'react-icons/hi';
+import { FiMenu } from "react-icons/fi";
+import { logout } from "../api";
+import Button from "./Button/Button";
+
 interface Props {
 }
 
@@ -20,6 +23,20 @@ const Header: FC<Props> = (props) => {
     {/* <div className="w-screen h-12 bg-gray-50 flex items-center">
         <HiOutlineMenu className="h-6 w-6 ml-8 text-gray-600"/>
     </div> */}
+    <div className="h-14 border-b shadow-md px-5  flex justify-between ">
+            <ul className="flex flex-row space-x-4 py-5 ">
+            <li><a ><FiMenu className="w-5 h-5 text-gray-800" ></FiMenu></a></li>
+               
+            <li><a href="\" className=" text-gray-500 ">Dashboard</a></li>
+           </ul>
+           <div className="py-2">
+           <Button theme="primary" onClick={() =>{
+         logout();
+         window.location.href = "/login";
+        }}>
+          Logout</Button></div>
+         
+        </div>
     </>
   );
 };
