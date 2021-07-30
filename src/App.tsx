@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import AppContainerPage from './pages/AppContainer.page';
 import AuthPage from './pages/Auth.page';
 import NotFoundPage from './pages/NotFound.page';
-import { LS_LOGIN_TOKEN } from "./api";
+import { LS_LOGIN_TOKEN } from './api/base';
 import Header from './components/Header';
 
 function App() {

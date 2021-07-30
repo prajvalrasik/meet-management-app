@@ -1,6 +1,6 @@
 import {FC,memo} from 'react';
 import { FiMenu } from "react-icons/fi";
-import { logout } from "../api";
+import { logout } from "../api/auth";
 import Button from "./Button/Button";
 
 interface Props {
