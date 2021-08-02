@@ -1,36 +1,49 @@
 import axios from "axios";
 import { User } from "../models/User";
-
 import { BASE_URL, LS_LOGIN_TOKEN } from "./base";
 
-
-
-interface LoginRequest {
+interface LoginData {
     email: string;
-    password: string 
-}
-
-interface LoginResponse{
+    password: string;
+  }
+  
+  interface LoginResponse {
     data: {
-        is_2fa_enabled: boolean;
+      is_2fa_enabled: boolean;
     };
     token: string;
     user: User;
-}
+  }
+  
+  
 
-export const login = (data: LoginRequest) => {
+  
+  export const login = (data: LoginData) => {
     const url = BASE_URL + "/login";
-
-
-    return axios.post<LoginResponse>(url,data).then(
-        (response) => {
-            console.log(response.data.token);
-            localStorage.setItem(LS_LOGIN_TOKEN, response.data.token);
-            return response.data.user;
-    });
-};
-
-export const logout = ()=>{
+    console.log(data);
+    return axios
+      .post<LoginResponse>(url, data)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem(
+          "Auth token ",
+          response.data.token
+        
+        );
+        return response.data.user;
+      });
+  };
+  
+  export const logout = () => {
     localStorage.removeItem(LS_LOGIN_TOKEN);
+  };
 
-}
+  interface MeResponse {
+    data : User;
+  }
+  export const me = () => {
+    const url = BASE_URL + "/me";
+    return axios.get(url).then((response) => {
+      return response.data.data;
+    });
+  }

@@ -8,13 +8,15 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     error?: string;
     placeholder?: string;
     Icon? : IconType;
+    Iconclass? : string;
+
 }
 
-const Input: FC<Props> = ({touched, error , className, Icon, placeholder, id , ...rest}) => {
+const Input: FC<Props> = ({touched, error , className, Icon, Iconclass, placeholder, id , ...rest}) => {
   return (
     <>
       <div>
-      { Icon && ( <Icon className=" absolute h-6 w-6 text-blue-600 fill-blue " /> )}
+      { Icon && ( <Icon className= {" absolute h-6 w-6 text-blue-600 fill-blue " + Iconclass} /> )}
 
        { id && placeholder && (<label htmlFor={id} className="sr-only">  {/* sr-only makes the div hidden but able to be read by screen reader thus making it useful for screen readers */}
             {placeholder}

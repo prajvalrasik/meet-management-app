@@ -1,51 +1,60 @@
 import {FC,memo} from 'react';
-import {useHistory} from "react-router-dom";
-import {FiLock, FiUser} from "react-icons/fi"
 import {FaSpinner} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import {useFormik} from "formik";
+import { Link, useHistory } from 'react-router-dom';
+import {useFormik,} from "formik";
 import * as yup from "yup";
-import InputBox from '../components/InputBox/InputBox';
-import Button from '../components/Button/Button';
-import { login } from '../api/auth';
-
+import InputBox from '../../components/InputBox/InputBox';
+import Button from '../../components/Button/Button';
 
 interface Props {
 }
 
-const LoginPage: FC<Props> = (props) => {
+const SignupPage: FC<Props> = (props) => {
 
-  const history=useHistory();
-
+  const history = useHistory();
 
   const {handleSubmit , getFieldProps , touched , isSubmitting , errors} = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
+      username: ""
     },
     validationSchema: yup.object().shape({
       email: yup.string().required().email(),
-      password: yup.string().required().min(8, (min)=> "Atleast" + min+ " characters" )
+      password: yup.string().required().min(8, (min)=> "Atleast" + min+ " characters" ),
+      username: yup.string().required().min(2)
     }),
-    onSubmit: (data)=> {
-      login(data).then(()=>{
-        history.push("/dashboard");
-      })
-    }
+    onSubmit: (data) => {
+      console.log("Sending Data........ " + data)
+      setTimeout(() => {
+          history.push('/dashboard');
+      }, 1000);
+  },
+
   })
   
   return (
     <div className="min-h-screen w-1/2 flex items-center justify-center bg-gray-50">
-      <div className="space-y-8">
-      <p className="text-4xl">Log In to <span className="text-gray-700 font-semibold">MEETEMP</span></p>
-      <p className="mt-2 text-base">New Here? <Link to="/signup" className="text-red-900 underline">Create an account</Link></p>
+      <div className="space-y-4">
+      <p className="text-4xl">Get started with a <br/>free account</p>
+      <p className="mt-2 text-base">Already have an account? <Link to="/login" className="text-red-900 underline">Log in</Link></p>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit} >
 
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
 
             <InputBox
-              Icon={FiUser}
+              id="Username"
+              type="username"
+              autoComplete="username"
+              placeholder="User Name"
+              required
+              {...getFieldProps("username")}
+              touched= {touched.username}
+              error= {errors.username}
+            ></InputBox>
+
+            <InputBox
               id="email-address"
               type="email"
               autoComplete="email"
@@ -57,7 +66,6 @@ const LoginPage: FC<Props> = (props) => {
             ></InputBox>
 
             <InputBox
-              Icon={FiLock}
               id="password"
               type="password"
               autoComplete="current-password"
@@ -72,45 +80,38 @@ const LoginPage: FC<Props> = (props) => {
           </div>
 
           <div className="flex items-center justify-between">
-          <div className="flex">
+            
+
+            <div className="text-sm">
+            <div className="flex">
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-5 w-4 text-red-800 focus:ring-red-800 border-gray-300 rounded "
+                className="h-5 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded "
               />
               <label htmlFor="remember-me" className="ml-2 mb-2 block text-sm text-gray-400">
-                Keep me logged in
+                I agree to the terms and conditions.
               </label>
           </div>
-
-            {/* <div className="text-sm">
-              <Link to="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot your password?
-              </Link>
-            </div> */}
+            </div>
           </div>
 
           <div className="flex flex-row  w-full justify-end">
-            <Button theme="primary" look="solid" >Log In</Button>
+            <Button theme="primary" look="solid" >Sign Up</Button>
             {isSubmitting && <FaSpinner className="animate-spin mt-5"></FaSpinner> }
           </div>
         </form>
 
-        <div className="w-full text-center items-center">
+        
 
-          <Link to="/forgot-password" className="font-medium w-full text-center text-gray-800 hover:text-red-800">
-                Forgot password?
-          </Link>
-        </div>
-
-        <p className="mt-2">© 2020 All Rights Reserved.<Link to="/dashboard" className="text-red-900"> CORK</Link> is a product of <br /> Designreset. <span className="text-red-900 ">Cookie Preferences, Privacy, and Terms.</span></p>
+        <p className="pt-6">© 2020 All Rights Reserved.<span className="text-red-900"> CORK</span> is a product of <br /> Designreset. <span className="text-red-900 ">Cookie Preferences, Privacy, and Terms.</span></p>
       </div>
     </div>
   );
 };
 
-LoginPage.defaultProps = {
+SignupPage.defaultProps = {
 }
 
-export default  memo(LoginPage);
+export default  memo(SignupPage);
